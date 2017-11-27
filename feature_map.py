@@ -22,11 +22,6 @@ img = Image.open("1.jpg")
 imgg = img.resize((picturesize[1],picturesize[0]))  # resize width*heght i.e.  column*rows
 
 
-img1 = Image.open("1.bmp")
-plt.imshow(img1) 
-plt.show()
-
-
 
 
 
