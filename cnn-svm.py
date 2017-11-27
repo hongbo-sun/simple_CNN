@@ -24,7 +24,7 @@ sys.setdefaultencoding('utf8')
 picturesize=picturesize()
 def load_data():
 	picture_num=202
-	picturefolder="C:\Users\lenovo\Desktop/T1"
+	picturefolder="T1"
 	data = np.empty((picture_num,1,picturesize[0],picturesize[1]),dtype="float32")
 	label = np.empty((picture_num,),dtype="uint8")
 	imgs = os.listdir(picturefolder)
