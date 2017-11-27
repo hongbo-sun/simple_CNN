@@ -44,7 +44,7 @@ sys.setrecursionlimit(1000000000)
 picturesize=picturesize()
 def load_data():
 	picture_num=18823
-	picturefolder="C:\Users\lenovo\Desktop/T"
+	picturefolder="T"
 	data = np.empty((picture_num,1,picturesize[0],picturesize[1]),dtype="float32")
 	label = np.empty((picture_num,),dtype="uint8")
 	imgs = os.listdir(picturefolder)
