@@ -43,8 +43,8 @@ from picturesize import picturesize
 sys.setrecursionlimit(1000000000)
 picturesize=picturesize()
 def load_data():
-	picture_num=18823
-	picturefolder="T"
+	picture_num=202
+	picturefolder="T1"
 	data = np.empty((picture_num,1,picturesize[0],picturesize[1]),dtype="float32")
 	label = np.empty((picture_num,),dtype="uint8")
 	imgs = os.listdir(picturefolder)
@@ -114,12 +114,12 @@ index = [i for i in range(len(data))]
 random.shuffle(index)
 data = data[index]
 label = label[index]
-train_num=13000
+train_num=150
 (X_train,X_val) = (data[0:train_num],data[train_num:])
 (Y_train,Y_val) = (label[0:train_num],label[train_num:])
 
 #使用early stopping返回最佳epoch对应的model
 #early_stopping = EarlyStopping(monitor='val_loss', patience=1)
 checkpointer = ModelCheckpoint(monitor='val_acc',filepath='vggtv4.h5', verbose=1, save_best_only=True)
-model.fit(X_train, Y_train, batch_size=128,validation_data=(X_val, Y_val),nb_epoch=30,verbose=1,callbacks=[checkpointer])
+model.fit(X_train, Y_train, batch_size=32,validation_data=(X_val, Y_val),nb_epoch=30,verbose=1,callbacks=[checkpointer])
 model.save('4.h5')
