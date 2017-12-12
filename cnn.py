@@ -12,7 +12,7 @@ download data here: http://pan.baid u.com/s/1qCdS6
 from __future__ import absolute_import
 from __future__ import print_function
 from keras.models import Sequential
-from keras.models import load_model
+
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution2D, MaxPooling2D
 from keras.optimizers import SGD
@@ -22,7 +22,8 @@ import random
 from keras.callbacks import EarlyStopping
 import numpy as np
 from keras import metrics
-from keras.layers import Conv2D
+from keras.layers import Conv2D, MaxPooling2D,Input,Dense,Activation,Flatten
+from keras.models import load_model,Model
 
 import os
 from PIL import Image
@@ -31,7 +32,7 @@ import numpy as np
 import os
 from PIL import Image
 import numpy as np
-from keras.models import load_model
+
 from keras.callbacks import ModelCheckpoint
 
 import sys
@@ -43,8 +44,8 @@ from picturesize import picturesize
 sys.setrecursionlimit(1000000000)
 picturesize=picturesize()
 def load_data():
-	picture_num=202
-	picturefolder="T1"
+	picture_num=18823
+	picturefolder="C:\Users\lenovo\Desktop/T"
 	data = np.empty((picture_num,1,picturesize[0],picturesize[1]),dtype="float32")
 	label = np.empty((picture_num,),dtype="uint8")
 	imgs = os.listdir(picturefolder)
@@ -53,7 +54,7 @@ def load_data():
 	#os.system("pause")
 	for i in range(num):
 		img = Image.open(picturefolder+"/"+imgs[i])
-		imgg = img.resize((picturesize[1],picturesize[0]))  # resize width*heght i.e.  column*row
+		imgg = img.resize((picturesize[1],picturesize[0]))  # resize width*heght i.e.  column*rows
 		#imgg.show()
 		arr = np.asarray(imgg,dtype="float32")
 		data[i,:,:,:] = arr
@@ -102,24 +103,36 @@ def create_model():
 	model.add(Activation('softmax'))
 	return model
 
-
+def create_model1():
+   input_image=Input(shape=(1,picturesize[0],picturesize[1])) 
+   x=Conv2D(8,(5,5),padding='valid',activation='relu')(input_image)
+   x=Conv2D(8,(3,3),padding='valid',activation='relu')(x)
+   x=MaxPooling2D((2,2))(x)
+   x=Conv2D(16,(3,3),padding='valid',activation='relu')(x)
+   x=MaxPooling2D((2,2))(x)
+   x=Flatten()(x)
+   x=Dense(128,activation='relu')(x)
+   x=Dense(2,activation='softmax')(x)
+   model =Model(inputs=input_image,outputs=x)
+   return model
+    
 #############
 #开始训练模型
 ##############
-model = create_model()
-sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model = create_model1()
+sgd = SGD(lr=0.01,  momentum=0.9) #decay=1e-6,nesterov=True)
 model.compile(loss="categorical_crossentropy", optimizer=sgd, metrics=['accuracy'])
 
 index = [i for i in range(len(data))]
 random.shuffle(index)
 data = data[index]
 label = label[index]
-train_num=150
+train_num=13000
 (X_train,X_val) = (data[0:train_num],data[train_num:])
 (Y_train,Y_val) = (label[0:train_num],label[train_num:])
 
 #使用early stopping返回最佳epoch对应的model
 #early_stopping = EarlyStopping(monitor='val_loss', patience=1)
 checkpointer = ModelCheckpoint(monitor='val_acc',filepath='vggtv4.h5', verbose=1, save_best_only=True)
-model.fit(X_train, Y_train, batch_size=32,validation_data=(X_val, Y_val),nb_epoch=30,verbose=1,callbacks=[checkpointer])
+model.fit(X_train, Y_train, batch_size=64,validation_data=(X_val, Y_val),nb_epoch=30,verbose=1,callbacks=[checkpointer])
 model.save('4.h5')
