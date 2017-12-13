@@ -1,14 +1,4 @@
 #coding:utf-8
-"""
-Author:wepon
-Code:https://github.com/wepe
-
-File: data.py
-
-download data here: http://pan.baid u.com/s/1qCdS6
-
-"""
-
 from __future__ import absolute_import
 from __future__ import print_function
 from keras.models import Sequential
