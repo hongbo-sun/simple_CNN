@@ -1,10 +1,4 @@
 #coding:utf-8
-'''
-Author:wepon
-Code:https://github.com/wepe
-
-File: cnn-svm.py
-'''
 from __future__ import print_function
 import theano
 from sklearn.ensemble import RandomForestClassifier
