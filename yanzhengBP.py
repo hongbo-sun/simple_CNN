@@ -99,6 +99,7 @@ for j in xrange(100000):
     syn1 += buchang*(l1.T.dot(l2_delta))/4.0     
 
 
+ print l2
 
 
 
