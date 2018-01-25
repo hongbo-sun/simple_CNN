@@ -44,5 +44,5 @@ for iter in xrange(1000000):
 print "Output After Training:"
 print l1
 
-dict1 = {1 : "blue", "c" : "color", "g" : "gray", "r" : "red"}
-print dict1.items()
+#dict1 = {1 : "blue", "c" : "color", "g" : "gray", "r" : "red"}
+#print dict1.items()
