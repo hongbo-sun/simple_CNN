@@ -62,7 +62,7 @@ def load_data():
 	#os.system("pause")
 	for i in range(num):
 		img = Image.open(picturefolder+"/"+imgs[i])
-		imgg = img.resize((picturesize[1],picturesize[0]))  # resize width*heght i.e.  column*rows
+		imgg = img.resize((picturesize[1],picturesize[0]))  # resize width*height i.e.  column*rows
 		#imgg.show()
 		arr = np.asarray(imgg,dtype="float32")
 		data[i,:,:,:] = arr
