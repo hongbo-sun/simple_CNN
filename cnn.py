@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 
 from picturesize import picturesize
-#读取文件夹mnist下的42000张图片，图片为灰度图，所以为1通道，如果是将彩色图作为输入,则将1替换为3,图像大小28*28
+
 
 class precisionsHistory(keras.callbacks.Callback):
     def on_train_begin(self, logs={}):
@@ -54,6 +54,8 @@ picturesize=picturesize()
 def load_data():
 	picture_num=202
 	picturefolder="C:\Users\lenovo\Desktop/T1"
+	
+	#读取文件下的图片，图片为灰度图，所以为1通道，如果是将彩色图作为输入,则将1替换为3
 	data = np.empty((picture_num,1,picturesize[0],picturesize[1]),dtype="float32")
 	label = np.empty((picture_num,),dtype="uint8")
 	imgs = os.listdir(picturefolder)
