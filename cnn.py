@@ -142,6 +142,10 @@ def create_model1():
 #开始训练模型
 ##############
 model = create_model1()
+print(model.summary())		#查看模型的结构
+
+
+#为模型构建优化器和损失函数
 sgd = SGD(lr=0.01,  momentum=0.9) #decay=1e-6,nesterov=True)
 model.compile(loss="categorical_crossentropy", optimizer=sgd, metrics=['accuracy'])
 
